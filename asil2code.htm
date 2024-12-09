@@ -3,230 +3,128 @@ layout: default
 title: ASIL Compliance Table
 ---
 
-{% raw %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ page.title }}</title>
-    <style>
-        /* Previous styles remain the same */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            font-family: Arial, sans-serif;
-        }
-        .controls {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-        }
-        select {
-            padding: 8px;
-            font-size: 16px;
-            min-width: 150px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-        .header-row {
-            background-color: #e8f4ea;
-            font-weight: bold;
-        }
-        .section-header {
-            background-color: #f0f0f0;
-            font-weight: bold;
-        }
-        .asil-header {
-            text-align: center;
-            font-weight: bold;
-        }
-        .asil-cell {
-            text-align: center;
-            background-color: #e6eeff;
-        }
-        .highlighted {
-            background-color: #fff3cd;
-            font-weight: bold;
-        }
-        .highlighted-header {
-            background-color: #ffe8b3;
-            font-weight: bold;
-        }
-        .legend {
-            margin: 20px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-        }
-        .table-title {
-            background-color: #e8f4ea;
-            padding: 10px;
-            margin-top: 20px;
-            font-weight: bold;
-            border: 1px solid #ccc;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="controls">
-            <label for="asilLevel"><strong>Select ASIL Level: </strong></label>
-            <select id="asilLevel">
-                {% assign asil_levels = "A,B,C,D" | split: "," %}
-                {% for level in asil_levels %}
-                    <option value="{{ level }}">ASIL {{ level }}</option>
-                {% endfor %}
-            </select>
-        </div>
+<div class="container">
+  <h1>ASIL Compliance Assessment</h1>
+  
+  <div class="controls">
+    <label for="asilSelect">Select ASIL Level:</label>
+    <select id="asilSelect" class="asil-select">
+      <option value="A">ASIL A</option>
+      <option value="B">ASIL B</option>
+      <option value="C">ASIL C</option>
+      <option value="D">ASIL D</option>
+    </select>
+  </div>
 
-        <div class="legend">
-            <p>(+) - functionalities matching methods recommended by the ISO 26262-6</p>
-            <p>(++) - functionalities matching methods highly recommended by the ISO 26262-6</p>
-            <p>o - functionalities matching methods have no recommendation by the ISO 26262-6</p>
-        </div>
+  <div class="legend">
+    <p>(++) - Highly recommended by ISO 26262-6</p>
+    <p>(+) - Recommended by ISO 26262-6</p>
+    <p>o - No recommendation by ISO 26262-6</p>
+  </div>
 
-        <div class="table-title">C/C++Test Functionality</div>
-        <table id="complianceTable">
-            <tr>
-                <th rowspan="2">Functionality</th>
-                <th colspan="4" class="asil-header">ASIL</th>
-            </tr>
-            <tr>
-                {% for level in asil_levels %}
-                    <th class="asil-header asil-{{ level }}">{{ level }}</th>
-                {% endfor %}
-            </tr>
-            
-            <!-- Coding Standards Compliance -->
-            {% assign coding_standards = "
-                Static Code Analysis|Table 7: 1h|++,++,++,++
-            " | split: "," %}
-
-            <!-- Analysis Types -->
-            {% assign analysis_types = "
-                Enforcement of Low Complexity|Table 1: 1a|++,++,++,++,
-                Use of Language Subsets|Table 1: 1b|++,++,++,++,
-                Enforcement of Strong Typing|Table 1: 1c|++,++,++,++,
-                Use of Defensive Implementation Techniques|Table 1:1g|+,+,++,++,
-                Use of Well-Trusted Design Principles|Table 1:1f|+,++,++,++,
-                Use of Style Guides|Table 1: 1g|+,++,++,++,
-                Use of Naming Conventions|Table 1: 1h|++,++,++,++
-            " | split: "," %}
-
-            <!-- Specific Coding Standards Guidelines -->
-            {% assign coding_guidelines = "
-                One Entry and One Exit Point in Subprograms and Functions|Table 6: 1a|++,++,++,++,
-                No Dynamic Objects or Variables|Table 6: 1b|+,++,++,++,
-                Initialization of Variables|Table 6: 1c|++,++,++,++,
-                No Multiple Use of Variable Names|Table 6: 1d|++,++,++,++,
-                Avoid Global Variables or Else Justify Their Usage|Table 6: 1e|+,+,++,++,
-                Restricted Use of Pointers|Table 6: 1f|+,++,++,++,
-                No Implicit Type Conversions|Table 6: 1g|+,++,++,++,
-                No Hidden Data Flow or Control Flow|Table 6: 1h|+,++,++,++,
-                No Unconditional Jumps|Table 6: 1i|++,++,++,++,
-                No Recursions|Table 6: 1j|+,+,++,++
-            " | split: "," %}
-
-            <!-- Flow Analysis -->
-            {% assign flow_analysis = "
-                Semi-Formal Verification|Table 7: 1d|+,+,++,++,
-                Formal Verification|Table 7: 1e|o,o,+,+,
-                Control Flow Analysis|Table 7: 1f|+,+,++,++,
-                Data Flow Analysis|Table 7: 1g|+,+,++,++,
-                Static Code Analysis|Table 7: 1h|++,++,++,++,
-                Static Analyses Based on Abstract Interpretation|Table 7: 1i|+,+,+,+
-            " | split: "," %}
-
-            <!-- Unit & Integration Testing -->
-            {% assign unit_testing = "
-                Fault Injection Test|Table 7: 1l|+,+,+,++,
-                Resource Usage Evaluation|Table 7: 1m|+,+,+,++,
-                Analysis of Requirements|Table 8: 1a|++,++,++,++,
-                Generation and Analysis of Equivalence Classes|Table 8: 1b|+,++,++,++,
-                Analysis of Boundary Values|Table 8: 1c|+,++,++,++,
-                Error Guessing Based on Knowledge or Experience|Table 8: 1d|+,+,+,+
-            " | split: "," %}
-
-            <!-- Structural Code Coverage -->
-            {% assign code_coverage = "
-                Statement Coverage|Table 9: 1a|++,++,+,+,
-                Branch Coverage|Table 9: 1b|+,++,++,++,
-                MC/DC|Table 9: 1c|+,+,+,++,
-                Function Coverage|Table 12: 1a|+,+,++,++,
-                Call Coverage|Table 12: 1b|+,+,++,++
-            " | split: "," %}
-
-            <!-- Test Environment -->
-            {% assign test_environment = "
-                Hardware-in-the-Loop|Table 13: 1a|++,++,++,++
-            " | split: "," %}
-
-            <!-- Parasoft DTP -->
-            {% assign parasoft_dtp = "
-                Dashboard Walk Through|Table 7: 1a|++,+,o,o,
-                Paired Programming|Table 7: 1b|+,+,+,+,
-                Inspection|Table 7: 1c|+,++,++,++,
-                Requirements-Based Test|Table 7: 1j|++,++,++,++
-            " | split: "," %}
-
-            {% assign sections = "
-                Coding Standards Compliance|coding_standards,
-                Analysis Types|analysis_types,
-                Specific Coding Standards Guidelines|coding_guidelines,
-                Flow Analysis|flow_analysis,
-                Unit & Integration Testing|unit_testing,
-                Structural Code Coverage|code_coverage,
-                Test Environment|test_environment,
-                Parasoft DTP|parasoft_dtp
-            " | split: "," %}
-
-            {% for section in sections %}
-                {% assign section_parts = section | split: "|" %}
-                <tr class="section-header">
-                    <td colspan="5">{{ section_parts[0] }}</td>
-                </tr>
-                {% assign items = section_parts[1] %}
-                {% for item in items %}
-                    {% assign item_parts = item | split: "|" %}
-                    <tr>
-                        <td>{{ item_parts[0] }} ({{ item_parts[1] }})</td>
-                        {% assign ratings = item_parts[2] | split: "," %}
-                        {% for rating in ratings %}
-                            <td class="asil-cell asil-{{ asil_levels[forloop.index0] }}">{{ rating }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
+  <table class="asil-table">
+    <thead>
+      <tr>
+        <th>Functionality</th>
+        <th>ASIL A</th>
+        <th>ASIL B</th>
+        <th>ASIL C</th>
+        <th>ASIL D</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for section in site.data.asil_data.ratings_data %}
+        <tr class="section-header">
+          <td colspan="5">{{ section.section }}</td>
+        </tr>
+        {% for item in section.items %}
+          <tr>
+            <td>{{ item.name }} ({{ item.table }})</td>
+            {% for rating in item.ratings %}
+              <td class="asil-cell" data-asil="{{ forloop.index }}">{{ rating }}</td>
             {% endfor %}
-        </table>
-    </div>
+          </tr>
+        {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
-    <script>
-        function highlightASIL(level) {
-            document.querySelectorAll('.highlighted, .highlighted-header').forEach(el => {
-                el.classList.remove('highlighted', 'highlighted-header');
-            });
-            
-            document.querySelectorAll(`.asil-${level}`).forEach(cell => {
-                cell.classList.add('highlighted');
-            });
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .controls {
+    margin: 20px 0;
+  }
+  
+  .asil-select {
+    padding: 8px;
+    font-size: 16px;
+    min-width: 200px;
+  }
+  
+  .legend {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  
+  .asil-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .asil-table th,
+  .asil-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .section-header {
+    background-color: #e8f4ea;
+    font-weight: bold;
+  }
+  
+  .asil-cell {
+    text-align: center;
+    background-color: #f8f9fa;
+  }
+  
+  .highlighted {
+    background-color: #fff3cd;
+    font-weight: bold;
+  }
+</style>
 
-            document.querySelector(`.asil-header.asil-${level}`).classList.add('highlighted-header');
-        }
-
-        document.getElementById('asilLevel').addEventListener('change', (e) => {
-            highlightASIL(e.target.value);
-        });
-
-        highlightASIL('A');
-    </script>
-</body>
-</html>
-{% endraw %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const select = document.getElementById('asilSelect');
+  
+  function highlightColumn(level) {
+    const index = ['A', 'B', 'C', 'D'].indexOf(level) + 1;
+    
+    document.querySelectorAll('.asil-cell').forEach(cell => {
+      cell.classList.remove('highlighted');
+    });
+    
+    document.querySelectorAll(`[data-asil="${index}"]`).forEach(cell => {
+      cell.classList.add('highlighted');
+    });
+  }
+  
+  select.addEventListener('change', function() {
+    highlightColumn(this.value);
+  });
+  
+  // Initial highlight
+  highlightColumn('A');
+});
+</script>
