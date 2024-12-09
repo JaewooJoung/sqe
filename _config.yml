@@ -1,0 +1,24 @@
+title: Risk Assessment Documentation
+description: Documentation for risk assessment tools and matrices
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-relative-links
+  - jekyll-last-modified-at
+
+# File handling
+include:
+  - "*.html"
+  - "*.htm"
+
+# Default front matter for HTML files
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
