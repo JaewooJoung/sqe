@@ -18,7 +18,6 @@ include:
 defaults:
   -
     scope:
-      path: "" # an empty string here means all files in the project
-      type: "pages"
+      path: ""
     values:
-      layout: "default"
+      last_modified_at: site.time
