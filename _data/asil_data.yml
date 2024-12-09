@@ -1,0 +1,16 @@
+sections:
+  - name: Coding Standards Compliance
+    items:
+      - name: Static Code Analysis
+        table: Table 7: 1h
+        ratings: [++, ++, ++, ++]
+
+  - name: Analysis Types
+    items:
+      - name: Enforcement of Low Complexity
+        table: Table 1: 1a
+        ratings: [++, ++, ++, ++]
+      - name: Use of Language Subsets
+        table: Table 1: 1b
+        ratings: [++, ++, ++, ++]
+      # Add other items...
