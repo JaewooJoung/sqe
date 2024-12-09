@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container { 
+            max-width: 1200px; 
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        .highlighted {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+        .legend p {
+            margin: 5px 0;
+        }
+        .recommendation-plus-plus {
+            color: #28a745;
+        }
+        .recommendation-plus {
+            color: #007bff;
+        }
+        .recommendation-o {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ISO 26262-6 Compliance Table</h1>
+        
+        <div class="controls">
+            <label for="asilLevel">Select ASIL Level: </label>
+            <select id="asilLevel">
+                <option value="A">ASIL A</option>
+                <option value="B">ASIL B</option>
+                <option value="C">ASIL C</option>
+                <option value="D">ASIL D</option>
+            </select>
+        </div>
+
+        <div class="legend">
+            <p><strong>Legend:</strong></p>
+            <p class="recommendation-plus-plus">(++) – functionalities matching methods highly recommended by the ISO 26262-6</p>
+            <p class="recommendation-plus">(+) – functionalities matching methods recommended by the ISO 26262-6</p>
+            <p class="recommendation-o">o – functionalities matching methods have no recommendation by the ISO 26262-6</p>
+        </div>
+
+        <table id="complianceTable">
+            <thead>
+                <tr>
+                    <th>Code Test Functionality</th>
+                    <th>ASIL A</th>
+                    <th>ASIL B</th>
+                    <th>ASIL C</th>
+                    <th>ASIL D</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% assign functionalities = "
+                Static Code Analysis (Table 7: 1h),++,++,++,++,Coding Standards Compliance|
+                Enforcement of Low Complexity (Table 1: 1a),++,++,++,++,Analysis Types|
+                Use of Language Subsets (Table 1: 1b),++,++,++,++,Analysis Types|
+                Enforcement of Strong Typing (Table 1: 1c),++,++,++,++,Analysis Types|
+                Use of Defensive Implementation Techniques (Table 1:1g),+,+,++,++,Analysis Types|
+                Semi-Formal Verification (Table 7: 1d),+,+,++,++,Flow Analysis|
+                Fault Injection Test (Table 7: 1l),+,+,+,++,Unit Testing|
+                Hardware-in-the-Loop (Table 13: 1a),++,++,++,++,Test Environment|
+                Dashboard Walk Through (Table 7: 1a),++,+,o,o,Reporting & Analytics
+                " | split: "|" %}
+
+                {% for functionality in functionalities %}
+                    {% assign parts = functionality | split: "," %}
+                    <tr>
+                        <td>{{ parts[0] }}</td>
+                        <td class="asil-a">{{ parts[1] }}</td>
+                        <td class="asil-b">{{ parts[2] }}</td>
+                        <td class="asil-c">{{ parts[3] }}</td>
+                        <td class="asil-d">{{ parts[4] }}</td>
+                        <td>{{ parts[5] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function highlightASIL(level) {
+            // Remove all previous highlights
+            const allCells = document.querySelectorAll('td');
+            allCells.forEach(cell => cell.classList.remove('highlighted'));
+            
+            // Add highlights to the selected ASIL level column
+            const cells = document.querySelectorAll(`.asil-${level.toLowerCase()}`);
+            cells.forEach(cell => cell.classList.add('highlighted'));
+        }
+
+        document.getElementById('asilLevel').addEventListener('change', (e) => {
+            highlightASIL(e.target.value);
+        });
+
+        // Initial highlighting
+        highlightASIL('A');
+    </script>
+</body>
+</html>
