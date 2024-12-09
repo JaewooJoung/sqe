@@ -1,7 +1,7 @@
 title: Risk Assessment Documentation
 description: Documentation for risk assessment tools and matrices
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+baseurl: "/sqe" # the subpath of your site, e.g. /blog
+url: "https://jaewoojoung.github.io/sqe/" # the base hostname & protocol for your site
 
 # Build settings
 markdown: kramdown
