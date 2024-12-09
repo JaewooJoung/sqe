@@ -16,3 +16,129 @@ ratings_data:
       - name: "Enforcement of Strong Typing"
         table: "Table 1: 1c"
         ratings: ["++", "++", "++", "++"]
+      - name: "Use of Defensive Implementation Techniques"
+        table: "Table 1: 1g"
+        ratings: ["+", "+", "++", "++"]
+      - name: "Use of Well-Trusted Design Principles"
+        table: "Table 1: 1f"
+        ratings: ["+", "++", "++", "++"]
+      - name: "Use of Style Guides"
+        table: "Table 1: 1g"
+        ratings: ["+", "++", "++", "++"]
+      - name: "Use of Naming Conventions"
+        table: "Table 1: 1h"
+        ratings: ["++", "++", "++", "++"]
+
+  - section: "Specific Coding Standards Guidelines"
+    items:
+      - name: "One Entry and One Exit Point in Subprograms and Functions"
+        table: "Table 6: 1a"
+        ratings: ["++", "++", "++", "++"]
+      - name: "No Dynamic Objects or Variables"
+        table: "Table 6: 1b"
+        ratings: ["+", "++", "++", "++"]
+      - name: "Initialization of Variables"
+        table: "Table 6: 1c"
+        ratings: ["++", "++", "++", "++"]
+      - name: "No Multiple Use of Variable Names"
+        table: "Table 6: 1d"
+        ratings: ["++", "++", "++", "++"]
+      - name: "Avoid Global Variables or Else Justify Their Usage"
+        table: "Table 6: 1e"
+        ratings: ["+", "+", "++", "++"]
+      - name: "Restricted Use of Pointers"
+        table: "Table 6: 1f"
+        ratings: ["+", "++", "++", "++"]
+      - name: "No Implicit Type Conversions"
+        table: "Table 6: 1g"
+        ratings: ["+", "++", "++", "++"]
+      - name: "No Hidden Data Flow or Control Flow"
+        table: "Table 6: 1h"
+        ratings: ["+", "++", "++", "++"]
+      - name: "No Unconditional Jumps"
+        table: "Table 6: 1i"
+        ratings: ["++", "++", "++", "++"]
+      - name: "No Recursions"
+        table: "Table 6: 1j"
+        ratings: ["+", "+", "++", "++"]
+
+  - section: "Flow Analysis: Static Data & Execution Flow Analysis"
+    items:
+      - name: "Semi-Formal Verification"
+        table: "Table 7: 1d"
+        ratings: ["+", "+", "++", "++"]
+      - name: "Formal Verification"
+        table: "Table 7: 1e"
+        ratings: ["o", "o", "+", "+"]
+      - name: "Control Flow Analysis"
+        table: "Table 7: 1f"
+        ratings: ["+", "+", "++", "++"]
+      - name: "Data Flow Analysis"
+        table: "Table 7: 1g"
+        ratings: ["+", "+", "++", "++"]
+      - name: "Static Code Analysis"
+        table: "Table 7: 1h"
+        ratings: ["++", "++", "++", "++"]
+      - name: "Static Analyses Based on Abstract Interpretation"
+        table: "Table 7: 1i"
+        ratings: ["+", "+", "+", "+"]
+
+  - section: "Unit & Integration Testing"
+    items:
+      - name: "Fault Injection Test"
+        table: "Table 7: 1l"
+        ratings: ["+", "+", "+", "++"]
+      - name: "Resource Usage Evaluation"
+        table: "Table 7: 1m"
+        ratings: ["+", "+", "+", "++"]
+      - name: "Analysis of Requirements"
+        table: "Table 8: 1a"
+        ratings: ["++", "++", "++", "++"]
+      - name: "Generation and Analysis of Equivalence Classes"
+        table: "Table 8: 1b"
+        ratings: ["+", "++", "++", "++"]
+      - name: "Analysis of Boundary Values"
+        table: "Table 8: 1c"
+        ratings: ["+", "++", "++", "++"]
+      - name: "Error Guessing Based on Knowledge or Experience"
+        table: "Table 8: 1d"
+        ratings: ["+", "+", "+", "+"]
+
+  - section: "Structural Code Coverage"
+    items:
+      - name: "Statement Coverage"
+        table: "Table 9: 1a"
+        ratings: ["++", "++", "+", "+"]
+      - name: "Branch Coverage"
+        table: "Table 9: 1b"
+        ratings: ["+", "++", "++", "++"]
+      - name: "MC/DC"
+        table: "Table 9: 1c"
+        ratings: ["+", "+", "+", "++"]
+      - name: "Function Coverage"
+        table: "Table 12: 1a"
+        ratings: ["+", "+", "++", "++"]
+      - name: "Call Coverage"
+        table: "Table 12: 1b"
+        ratings: ["+", "+", "++", "++"]
+
+  - section: "Test Environment: On-Target Hardware"
+    items:
+      - name: "Hardware-in-the-Loop"
+        table: "Table 13: 1a"
+        ratings: ["++", "++", "++", "++"]
+
+  - section: "Parasoft DTP: Reporting & Analytics"
+    items:
+      - name: "Dashboard Walk Through"
+        table: "Table 7: 1a"
+        ratings: ["++", "+", "o", "o"]
+      - name: "Paired Programming"
+        table: "Table 7: 1b"
+        ratings: ["+", "+", "+", "+"]
+      - name: "Inspection"
+        table: "Table 7: 1c"
+        ratings: ["+", "++", "++", "++"]
+      - name: "Requirements-Based Test"
+        table: "Table 7: 1j"
+        ratings: ["++", "++", "++", "++"]
