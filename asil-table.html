@@ -1,0 +1,126 @@
+---
+layout: default
+title: ASIL Compliance Table
+---
+
+<style>
+  .asil-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .asil-table th,
+  .asil-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .asil-table th {
+    background-color: #f5f5f5;
+  }
+  
+  .section-header {
+    background-color: #e8f4ea;
+    font-weight: bold;
+  }
+  
+  .asil-cell {
+    text-align: center;
+    width: 100px;
+  }
+  
+  .asil-select {
+    padding: 8px;
+    margin: 20px 0;
+    min-width: 200px;
+    font-size: 16px;
+  }
+  
+  .highlighted {
+    background-color: #fff3cd;
+    font-weight: bold;
+  }
+  
+  .legend {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .rating-plus-plus { color: #28a745; }
+  .rating-plus { color: #007bff; }
+  .rating-o { color: #6c757d; }
+</style>
+
+<div class="legend">
+  <p><strong>Legend:</strong></p>
+  <p class="rating-plus-plus">(++) – Highly recommended by ISO 26262-6</p>
+  <p class="rating-plus">(+) – Recommended by ISO 26262-6</p>
+  <p class="rating-o">o – No recommendation by ISO 26262-6</p>
+</div>
+
+<select class="asil-select" id="asilSelect">
+  {% for level in "A,B,C,D" | split: "," %}
+    <option value="{{ level }}">ASIL {{ level }}</option>
+  {% endfor %}
+</select>
+
+<table class="asil-table">
+  <thead>
+    <tr>
+      <th>Functionality</th>
+      <th>ASIL A</th>
+      <th>ASIL B</th>
+      <th>ASIL C</th>
+      <th>ASIL D</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for section in site.data.asil_data.sections %}
+      <tr class="section-header">
+        <td colspan="5">{{ section.name }}</td>
+      </tr>
+      {% for item in section.items %}
+        <tr>
+          <td>{{ item.name }} ({{ item.table }})</td>
+          {% for rating in item.ratings %}
+            <td class="asil-cell asil-{{ forloop.index }}" data-asil="{{ forloop.index }}">
+              {{ rating }}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const select = document.getElementById('asilSelect');
+  
+  function highlightColumn(asilLevel) {
+    // Remove existing highlights
+    document.querySelectorAll('.highlighted').forEach(cell => {
+      cell.classList.remove('highlighted');
+    });
+    
+    // Add highlights to selected column
+    document.querySelectorAll(`[data-asil="${asilLevel}"]`).forEach(cell => {
+      cell.classList.add('highlighted');
+    });
+  }
+  
+  select.addEventListener('change', function() {
+    const level = this.selectedIndex + 1;
+    highlightColumn(level);
+  });
+  
+  // Initial highlight
+  highlightColumn(1);
+});
+</script>
