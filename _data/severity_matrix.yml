@@ -1,0 +1,43 @@
+asil_levels:
+  severity:
+    - id: "S0"
+      name: "No injuries"
+    - id: "S1"
+      name: "Light to moderate injuries"
+    - id: "S2"
+      name: "Severe to life-threatening"
+    - id: "S3"
+      name: "Life-threatening to fatal"
+  exposure:
+    - id: "E1"
+      name: "Very low probability"
+    - id: "E2"
+      name: "Low probability"
+    - id: "E3"
+      name: "Medium probability"
+    - id: "E4"
+      name: "High probability"
+  controllability:
+    - id: "C1"
+      name: "No injuries"
+    - id: "C2"
+      name: "Normally controllable"
+    - id: "C3"
+      name: "Difficult to control"
+
+risk_matrix:
+  C1:
+    E1: { S0: "QM", S1: "QM", S2: "QM", S3: "QM" }
+    E2: { S0: "QM", S1: "QM", S2: "QM", S3: "QM" }
+    E3: { S0: "QM", S1: "QM", S2: "QM", S3: "A" }
+    E4: { S0: "QM", S1: "QM", S2: "A", S3: "B" }
+  C2:
+    E1: { S0: "QM", S1: "QM", S2: "QM", S3: "QM" }
+    E2: { S0: "QM", S1: "QM", S2: "QM", S3: "A" }
+    E3: { S0: "QM", S1: "QM", S2: "A", S3: "B" }
+    E4: { S0: "QM", S1: "A", S2: "B", S3: "C" }
+  C3:
+    E1: { S0: "QM", S1: "QM", S2: "QM", S3: "A" }
+    E2: { S0: "QM", S1: "QM", S2: "A", S3: "B" }
+    E3: { S0: "QM", S1: "A", S2: "B", S3: "C" }
+    E4: { S0: "QM", S1: "B", S2: "C", S3: "D" }
