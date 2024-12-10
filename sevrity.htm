@@ -6,21 +6,21 @@ title: Severity Assessment Matrix
 <div class="container">
   <div class="controls">
     <select id="severity">
-      {% for option in site.data.severity_matrix.options.severity %}
-        <option value="{{ option.id }}">{{ option.label }}</option>
-      {% endfor %}
+      <option value="S0">S₀ No injuries</option>
+      <option value="S1">S₁ Light to moderate injuries</option>
+      <option value="S2">S₂ Severe to life-threatening</option>
+      <option value="S3">S₃ Life-threatening to fatal</option>
     </select>
-
     <select id="exposure">
-      {% for option in site.data.severity_matrix.options.exposure %}
-        <option value="{{ option.id }}">{{ option.label }}</option>
-      {% endfor %}
+      <option value="E1">E₁ Very low probability</option>
+      <option value="E2">E₂ Low probability</option>
+      <option value="E3">E₃ Medium probability</option>
+      <option value="E4">E₄ High probability</option>
     </select>
-
     <select id="controllability">
-      {% for option in site.data.severity_matrix.options.controllability %}
-        <option value="{{ option.id }}">{{ option.label }}</option>
-      {% endfor %}
+      <option value="C1">C₁ No injuries</option>
+      <option value="C2">C₂ Normally controllable</option>
+      <option value="C3">C₃ Difficult to control</option>
     </select>
   </div>
 
@@ -33,28 +33,25 @@ title: Severity Assessment Matrix
     <tr>
       <th></th>
       <th></th>
-      {% for s in site.data.severity_matrix.options.severity %}
-        <th>{{ s.id }}</th>
-      {% endfor %}
+      <th>S0</th>
+      <th>S1</th>
+      <th>S2</th>
+      <th>S3</th>
     </tr>
-
     {% for c_entry in site.data.severity_matrix.matrix %}
-      {% assign c_id = c_entry[0] %}
-      {% assign e_entries = c_entry[1] %}
-      
-      {% for e_entry in e_entries %}
-        {% assign e_id = e_entry[0] %}
-        {% assign s_values = e_entry[1] %}
+      {% assign controllability = c_entry[0] %}
+      {% assign exposures = c_entry[1] %}
+      {% for e_entry in exposures %}
+        {% assign exposure = e_entry[0] %}
+        {% assign severities = e_entry[1] %}
         <tr>
-          <td>{% if forloop.first %}{{ c_id }}{% endif %}</td>
-          <td>{{ e_id }}</td>
-          {% for s in site.data.severity_matrix.options.severity %}
-            <td class="{{ s_values[s.id] | downcase }}" 
-                data-c="{{ c_id }}"
-                data-e="{{ e_id }}"
-                data-s="{{ s.id }}">
-              {{ s_values[s.id] }}
-            </td>
+          <td>{% if forloop.first %}{{ controllability }}{% endif %}</td>
+          <td>{{ exposure }}</td>
+          {% for s_level in severities %}
+            <td class="{{ s_level[1] | downcase }}" 
+                data-c="{{ controllability }}"
+                data-e="{{ exposure }}"
+                data-s="{{ s_level[0] }}">{{ s_level[1] }}</td>
           {% endfor %}
         </tr>
       {% endfor %}
@@ -63,116 +60,42 @@ title: Severity Assessment Matrix
 </div>
 
 <style>
-  .container { 
-    max-width: 1000px; 
-    margin: 20px auto; 
-    font-family: Arial, sans-serif;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  .controls { 
-    margin-bottom: 20px;
-    display: flex;
-    gap: 15px;
-  }
-  select { 
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    min-width: 200px;
-    background-color: #f8f9fa;
-  }
-  table { 
-    border-collapse: collapse; 
-    width: 100%;
-    background-color: #ffffff;
-  }
+  .container { max-width: 1000px; margin: 20px auto; font-family: Arial, sans-serif; }
+  .controls { margin-bottom: 20px; }
+  select { padding: 8px; margin-right: 15px; }
+  table { border-collapse: collapse; width: 100%; }
   th, td { 
-    border: 1px solid #dee2e6;
-    padding: 12px;
+    border: 1px solid #000; 
+    padding: 12px; 
     text-align: center;
   }
-  th { 
-    background-color: #f8f9fa;
-    font-weight: bold;
-  }
-  .highlighted { 
-    border: 3px solid #dc3545 !important;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 0 10px rgba(220,53,69,0.3);
-  }
-  .qm { 
-    background-color: #e8f5e9;
-    transition: background-color 0.3s ease;
-  }
-  .a { 
-    background-color: #fff3cd;
-    transition: background-color 0.3s ease;
-  }
-  .b { 
-    background-color: #ffe0b2;
-    transition: background-color 0.3s ease;
-  }
-  .c { 
-    background-color: #ffcdd2;
-    transition: background-color 0.3s ease;
-  }
-  .d { 
-    background-color: #ff8a80;
-    transition: background-color 0.3s ease;
-  }
-  .severity-header {
-    font-size: 1.2em;
-    font-weight: bold;
-    background-color: #f8f9fa;
-  }
-  td:hover {
-    opacity: 0.8;
-    cursor: pointer;
-  }
+  th { background-color: white; font-weight: bold; }
+  .highlighted { border: 2px solid red !important; }
+  .qm { background-color: #e8f5e9; }
+  .a { background-color: #fff9c4; }
+  .b { background-color: #ffe0b2; }
+  .c { background-color: #ffcdd2; }
+  .d { background-color: #ff8a80; }
+  .severity-header { font-size: 1.2em; font-weight: bold; }
 </style>
 
 <script>
-  function highlightCell() {
-    const severity = document.getElementById('severity').value;
-    const exposure = document.getElementById('exposure').value;
-    const controllability = document.getElementById('controllability').value;
-    
-    document.querySelectorAll('.highlighted').forEach(el => {
-      el.classList.remove('highlighted');
-    });
-    
-    const cell = document.querySelector(
-      `[data-c="${controllability}"][data-e="${exposure}"][data-s="${severity}"]`
-    );
-    if (cell) {
-      cell.classList.add('highlighted');
-      cell.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  }
-
-  ['severity', 'exposure', 'controllability'].forEach(id => {
-    document.getElementById(id).addEventListener('change', highlightCell);
+function highlightCell() {
+  const severity = document.getElementById('severity').value;
+  const exposure = document.getElementById('exposure').value;
+  const controllability = document.getElementById('controllability').value;
+  
+  document.querySelectorAll('.highlighted').forEach(el => {
+    el.classList.remove('highlighted');
   });
+  
+  document.querySelector(`[data-c="${controllability}"][data-e="${exposure}"][data-s="${severity}"]`)
+    ?.classList.add('highlighted');
+}
 
-  // Add click handler for cells
-  document.querySelectorAll('td[data-c]').forEach(cell => {
-    cell.addEventListener('click', function() {
-      const c = this.getAttribute('data-c');
-      const e = this.getAttribute('data-e');
-      const s = this.getAttribute('data-s');
-      
-      document.getElementById('controllability').value = c;
-      document.getElementById('exposure').value = e;
-      document.getElementById('severity').value = s;
-      
-      highlightCell();
-    });
-  });
+['severity', 'exposure', 'controllability'].forEach(id => {
+  document.getElementById(id).addEventListener('change', highlightCell);
+});
 
-  highlightCell();
+highlightCell();
 </script>
