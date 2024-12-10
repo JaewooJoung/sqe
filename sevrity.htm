@@ -7,19 +7,19 @@ title: Severity Check for Code Testing
   <div class="controls">
     <select id="severity">
       {% for level in site.data.severity_matrix.asil_levels.severity %}
-        <option value="{{ level.id }}">{{ level.id }} {{ level.name }}</option>
+        <option value="{{ level.id }}">{{ level.id }} - {{ level.name }}</option>
       {% endfor %}
     </select>
-
+    
     <select id="exposure">
       {% for level in site.data.severity_matrix.asil_levels.exposure %}
-        <option value="{{ level.id }}">{{ level.id }} {{ level.name }}</option>
+        <option value="{{ level.id }}">{{ level.id }} - {{ level.name }}</option>
       {% endfor %}
     </select>
-
+    
     <select id="controllability">
       {% for level in site.data.severity_matrix.asil_levels.controllability %}
-        <option value="{{ level.id }}">{{ level.id }} {{ level.name }}</option>
+        <option value="{{ level.id }}">{{ level.id }} - {{ level.name }}</option>
       {% endfor %}
     </select>
   </div>
@@ -37,21 +37,26 @@ title: Severity Check for Code Testing
         <th>{{ level.id }}</th>
       {% endfor %}
     </tr>
-    {% for c in site.data.severity_matrix.risk_matrix %}
-      {% assign controllability = c[0] %}
-      {% assign exposures = c[1] %}
-      {% for e in exposures %}
-        {% assign exposure = e[0] %}
-        {% assign severities = e[1] %}
+    
+    {% for c_entry in site.data.severity_matrix.risk_matrix %}
+      {% assign c_id = c_entry[0] %}
+      {% assign e_data = c_entry[1] %}
+      
+      {% for e_entry in e_data %}
+        {% assign e_id = e_entry[0] %}
+        {% assign s_data = e_entry[1] %}
+        
         <tr>
-          <td>{% if forloop.first %}{{ controllability }}{% endif %}</td>
-          <td>{{ exposure }}</td>
-          {% for s in site.data.severity_matrix.asil_levels.severity %}
-            <td class="{{ severities[s.id] | downcase }}" 
-                data-c="{{ controllability }}"
-                data-e="{{ exposure }}"
-                data-s="{{ s.id }}">
-              {{ severities[s.id] }}
+          <td>{% if forloop.first %}{{ c_id }}{% endif %}</td>
+          <td>{{ e_id }}</td>
+          
+          {% for s_level in site.data.severity_matrix.asil_levels.severity %}
+            {% assign value = s_data[s_level.id] %}
+            <td class="{{ value | downcase }}" 
+                data-c="{{ c_id }}"
+                data-e="{{ e_id }}"
+                data-s="{{ s_level.id }}">
+              {{ value }}
             </td>
           {% endfor %}
         </tr>
@@ -61,20 +66,60 @@ title: Severity Check for Code Testing
 </div>
 
 <style>
-  /* Your existing CSS */
+  .container {
+    max-width: 1000px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  .controls {
+    margin-bottom: 20px;
+  }
+  select {
+    padding: 8px;
+    margin-right: 15px;
+    min-width: 200px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #000;
+    padding: 12px;
+    text-align: center;
+  }
+  th {
+    background-color: white;
+    font-weight: bold;
+  }
+  .highlighted {
+    border: 2px solid red !important;
+  }
+  .qm { background-color: #e8f5e9; }
+  .a { background-color: #fff9c4; }
+  .b { background-color: #ffe0b2; }
+  .c { background-color: #ffcdd2; }
+  .d { background-color: #ff8a80; }
+  .severity-header {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
 </style>
 
 <script>
-  // Simplified JavaScript for highlighting
   function highlightCell() {
     const severity = document.getElementById('severity').value;
     const exposure = document.getElementById('exposure').value;
     const controllability = document.getElementById('controllability').value;
     
-    document.querySelectorAll('.highlighted').forEach(el => el.classList.remove('highlighted'));
+    document.querySelectorAll('.highlighted').forEach(el => 
+      el.classList.remove('highlighted')
+    );
     
-    document.querySelector(`[data-c="${controllability}"][data-e="${exposure}"][data-s="${severity}"]`)
-      ?.classList.add('highlighted');
+    const cell = document.querySelector(
+      `[data-c="${controllability}"][data-e="${exposure}"][data-s="${severity}"]`
+    );
+    if (cell) cell.classList.add('highlighted');
   }
 
   ['severity', 'exposure', 'controllability'].forEach(id => {
