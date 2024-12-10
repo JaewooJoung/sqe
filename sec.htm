@@ -1,0 +1,253 @@
+---
+layout: default
+title: Risk Assessment Documentation
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Assessment Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
+        }
+        
+        h1 {
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+
+        .selector-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #fff;
+            min-width: 200px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: normal;
+        }
+
+        td:first-child, td:nth-child(2) {
+            text-align: left;
+            background-color: #f8f9fa;
+        }
+
+        .QM { color: #964B00; }
+        .A { color: #0000FF; }
+        .B { color: #0000FF; }
+        .C { color: #0000FF; }
+        .D { color: #0000FF; }
+
+        .highlighted {
+            background-color: #e6f3ff;
+        }
+
+        .severity-header {
+            border-bottom: 1px solid #e0e0e0;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Risk Assessment Documentation</h1>
+    
+    <div class="selector-container">
+        <select id="severityFilter">
+            <option value="S0">S0 No injuries</option>
+            <option value="S1">S1 Light and reversible injuries</option>
+            <option value="S2">S2 Severe and irreversible injuries</option>
+            <option value="S3">S3 Life-threatening injuries</option>
+        </select>
+        <select id="exposureFilter">
+            <option value="E1">E1 Very low probability</option>
+            <option value="E2">E2 Low probability</option>
+            <option value="E3">E3 Medium probability</option>
+            <option value="E4">E4 High probability</option>
+        </select>
+        <select id="controllabilityFilter">
+            <option value="C1">C1 No injuries</option>
+            <option value="C2">C2 Low risk of injuries</option>
+            <option value="C3">C3 High risk of injuries</option>
+        </select>
+    </div>
+
+    <table id="severityMatrix">
+        <thead>
+            <tr>
+                <th>Controllability</th>
+                <th>Exposure</th>
+                <th>S0</th>
+                <th>S1</th>
+                <th>S2</th>
+                <th>S3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- C1 rows -->
+            <tr data-controllability="C1" data-exposure="E1">
+                <td>C1</td>
+                <td>E1</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+            </tr>
+            <tr data-controllability="C1" data-exposure="E2">
+                <td></td>
+                <td>E2</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+            </tr>
+            <tr data-controllability="C1" data-exposure="E3">
+                <td></td>
+                <td>E3</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+            </tr>
+            <tr data-controllability="C1" data-exposure="E4">
+                <td></td>
+                <td>E4</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+                <td class="B">B</td>
+            </tr>
+            <!-- C2 rows -->
+            <tr data-controllability="C2" data-exposure="E1">
+                <td>C2</td>
+                <td>E1</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+            </tr>
+            <tr data-controllability="C2" data-exposure="E2">
+                <td></td>
+                <td>E2</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+            </tr>
+            <tr data-controllability="C2" data-exposure="E3">
+                <td></td>
+                <td>E3</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+                <td class="B">B</td>
+            </tr>
+            <tr data-controllability="C2" data-exposure="E4">
+                <td></td>
+                <td>E4</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+                <td class="B">B</td>
+                <td class="C">C</td>
+            </tr>
+            <!-- C3 rows -->
+            <tr data-controllability="C3" data-exposure="E1">
+                <td>C3</td>
+                <td>E1</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+            </tr>
+            <tr data-controllability="C3" data-exposure="E2">
+                <td></td>
+                <td>E2</td>
+                <td class="QM">QM</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+                <td class="B">B</td>
+            </tr>
+            <tr data-controllability="C3" data-exposure="E3">
+                <td></td>
+                <td>E3</td>
+                <td class="QM">QM</td>
+                <td class="A">A</td>
+                <td class="B">B</td>
+                <td class="C">C</td>
+            </tr>
+            <tr data-controllability="C3" data-exposure="E4">
+                <td></td>
+                <td>E4</td>
+                <td class="QM">QM</td>
+                <td class="B">B</td>
+                <td class="C">C</td>
+                <td class="D">D</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filters = {
+                controllability: document.getElementById('controllabilityFilter'),
+                exposure: document.getElementById('exposureFilter'),
+                severity: document.getElementById('severityFilter')
+            };
+
+            function updateTable() {
+                const rows = document.querySelectorAll('#severityMatrix tbody tr');
+                const selectedControllability = filters.controllability.value;
+                const selectedExposure = filters.exposure.value;
+                const selectedSeverity = filters.severity.value;
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    cells.forEach(cell => cell.classList.remove('highlighted'));
+                    
+                    const rowControllability = row.getAttribute('data-controllability');
+                    const rowExposure = row.getAttribute('data-exposure');
+
+                    if (rowControllability === selectedControllability && 
+                        rowExposure === selectedExposure) {
+                        const severityIndex = ['S0', 'S1', 'S2', 'S3'].indexOf(selectedSeverity);
+                        if (severityIndex !== -1) {
+                            cells[severityIndex + 2].classList.add('highlighted');
+                        }
+                    }
+                });
+            }
+
+            // Add event listeners to filters
+            Object.values(filters).forEach(filter => {
+                filter.addEventListener('change', updateTable);
+            });
+        });
+    </script>
+</body>
+</html>
