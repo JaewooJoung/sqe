@@ -2,54 +2,61 @@
 layout: default
 title: Risk Assessment Documentation
 ---
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="30">
+  <!-- This meta tag will refresh the page every 30 seconds -->
+</head>
+<body>
+  <h1>Risk Assessment Documentation</h1>
+  <div class="document-list">
+    {% for page in site.html_pages %}
+      {% unless page.url == "/" %}
+      <div class="document-item">
+        <h2>
+          <a href="{{ page.url | relative_url }}">
+            {{ page.title | default: page.url }}
+          </a>
+        </h2>
+        {% if page.description %}
+          <p>{{ page.description }}</p>
+        {% endif %}
+        {% if page.last_modified_at %}
+          <small>Last modified: {{ page.last_modified_at | date: "%B %d, %Y" }}</small>
+        {% else %}
+          <small>Last modified: {{ site.time | date: "%B %d, %Y" }}</small>
+        {% endif %}
+      </div>
+      {% endunless %}
+    {% endfor %}
+  </div>
 
-<h1>Risk Assessment Documentation</h1>
-
-<div class="document-list">
-  {% for page in site.html_pages %}
-    {% unless page.url == "/" %}
-    <div class="document-item">
-      <h2>
-        <a href="{{ page.url | relative_url }}">
-          {{ page.title | default: page.url }}
-        </a>
-      </h2>
-      {% if page.description %}
-        <p>{{ page.description }}</p>
-      {% endif %}
-      {% if page.last_modified_at %}
-        <small>Last modified: {{ page.last_modified_at | date: "%B %d, %Y" }}</small>
-      {% else %}
-        <small>Last modified: {{ site.time | date: "%B %d, %Y" }}</small>
-      {% endif %}
-    </div>
-    {% endunless %}
-  {% endfor %}
-</div>
-
-<style>
-  .document-list {
-    margin: 2em 0;
-  }
-  .document-item {
-    margin-bottom: 2em;
-    padding: 1em;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  .document-item h2 {
-    margin-top: 0;
-  }
-  .document-item a {
-    color: #0366d6;
-    text-decoration: none;
-  }
-  .document-item a:hover {
-    text-decoration: underline;
-  }
-  .document-item small {
-    color: #666;
-    display: block;
-    margin-top: 0.5em;
-  }
-</style>
+  <style>
+    .document-list {
+      margin: 2em 0;
+    }
+    .document-item {
+      margin-bottom: 2em;
+      padding: 1em;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .document-item h2 {
+      margin-top: 0;
+    }
+    .document-item a {
+      color: #0366d6;
+      text-decoration: none;
+    }
+    .document-item a:hover {
+      text-decoration: underline;
+    }
+    .document-item small {
+      color: #666;
+      display: block;
+      margin-top: 0.5em;
+    }
+  </style>
+</body>
+</html>
