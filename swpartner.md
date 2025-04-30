@@ -2,7 +2,7 @@
 flowchart TD
     A[OEM & Partner Relationship]
     
-    A --> B{OEM has technical\nrequirements\nshared to Partner?}
+    A --> B{OEM has technical \n requirements\nshared to Partner?}
     
     B -->|Yes| C[Stakeholder Analysis]
     C --> C1[Requirements Engineering]
