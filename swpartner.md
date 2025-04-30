@@ -2,7 +2,7 @@
 flowchart TD
     A[OEM & Partner Relationship]
     
-    A --> B{OEM has technical \n requirements\nshared to Partner?}
+    A --> B{OEM has technical requirements\nshared to Partner?}
     
     B -->|Yes| C[Stakeholder Analysis]
     C --> C1[Requirements Engineering]
@@ -12,15 +12,15 @@ flowchart TD
     
     B -->|No| D[Reasons?]
     
-    A --> E{How will OEM receive\nVnV reports from Partner\non Vehicle level?}
+    A --> E{How will OEM receive VnV reports from Partner on Vehicle level?}
     
-    A --> F{OEM has SW approval\ntowards Aurora?\ne.g., Blue OK}
+    A --> F{OEM has SW approval towards Aurora? e.g., Blue OK}
     
-    A --> G{OEM plans to have\nSW Delivery Review?}
+    A --> G{OEM plans to have SW Delivery Review?}
     
-    A --> H{How will OEM/Aurora\nensure fulfillment of\nrelated ADAS ISO?}
+    A --> H{How will OEM/Aurora ensure fulfillment of related ADAS ISO?}
     
-    A --> I{OEM has RASIC for\noverall vehicle after\nADK assembly?}
+    A --> I{OEM has RASIC for overall vehicle after ADK assembly?}
     I --> I1[Verification]
     I --> I2[Validation]
     I --> I3[Operation]
